@@ -8,19 +8,23 @@ export default function BottomNavigation() {
   const [activeSection, setActiveSection] = useState('home');
 
   const navItems = [
-    { id: 'home', label: 'Home', icon: 'bi-house-fill' },
-    { id: 'story', label: 'Story', icon: 'bi-heart-fill' },
-    { id: 'events', label: 'Events', icon: 'bi-calendar-event' },
-    { id: 'gallery', label: 'Gallery', icon: 'bi-images' },
-    { id: 'rsvp', label: 'RSVP', icon: 'bi-envelope-heart' }
+    { id: 'home', label: 'Home', icon: 'bi-house-fill', color: 'text-rose-600' },
+    { id: 'gallery', label: 'Gallery', icon: 'bi-images', color: 'text-purple-600' },
+    { id: 'rsvp', label: 'RSVP', icon: 'bi-envelope-heart', color: 'text-pink-600' },
+    { id: 'guestbook', label: 'Guestbook', icon: 'bi-chat-heart', color: 'text-blue-600' },
+    { id: 'chat', label: 'Chat', icon: 'bi-robot', color: 'text-green-600', onClick: () => {
+      // Toggle floating chat
+      const chatButton = document.querySelector('[data-chat-toggle]') as HTMLElement;
+      chatButton?.click();
+    }}
   ];
 
   useEffect(() => {
-    const sections = ['home', 'story', 'events', 'gallery', 'rsvp'];
+    const sections = ['home', 'gallery', 'rsvp', 'guestbook'];
     
     const handleScroll = () => {
       if (typeof window === 'undefined') return;
-      const scrollPosition = window.scrollY + 100;
+      const scrollPosition = window.scrollY + 200;
 
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = typeof document !== 'undefined' ? document.getElementById(sections[i]) : null;
@@ -33,50 +37,100 @@ export default function BottomNavigation() {
 
     if (typeof window !== 'undefined') {
       window.addEventListener('scroll', handleScroll);
+      handleScroll(); // Initial call
       return () => window.removeEventListener('scroll', handleScroll);
     }
   }, []);
 
   return (
     <motion.nav
-      className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-gray-200 md:hidden z-50 bottom-nav-shadow"
+      className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-rose-100 md:hidden z-50 bottom-nav-shadow"
       initial={{ y: 100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.3 }}
+      transition={{ duration: 0.5, delay: 1 }}
     >
-      <div className="flex justify-around items-center py-2">
-        {navItems.map((item) => (
-          <Link
-            key={item.id}
-            to={item.id}
-            spy={true}
-            smooth={true}
-            offset={-80}
-            duration={500}
-            className="flex flex-col items-center p-2 cursor-pointer transition-all duration-300"
-          >
-            <motion.div
-              className={`flex flex-col items-center space-y-1 ${
-                activeSection === item.id ? 'text-rose-600' : 'text-gray-500'
-              }`}
-              whileTap={{ scale: 0.9 }}
-              transition={{ duration: 0.1 }}
+      <div className="flex justify-around items-center py-3 px-2">
+        {navItems.map((item) => {
+          const isActive = activeSection === item.id;
+          const handleClick = () => {
+            if (item.onClick) {
+              item.onClick();
+            }
+          };
+
+          if (item.id === 'chat') {
+            return (
+              <motion.button
+                key={item.id}
+                onClick={handleClick}
+                className="flex flex-col items-center p-2 cursor-pointer transition-all duration-300"
+                whileTap={{ scale: 0.9 }}
+                whileHover={{ scale: 1.05 }}
+              >
+                <motion.div
+                  className={`flex flex-col items-center space-y-1 ${item.color}`}
+                  transition={{ duration: 0.2 }}
+                >
+                  <div className="relative p-2 rounded-full bg-gradient-to-r from-green-400 to-emerald-500 text-white shadow-lg">
+                    <i className={`${item.icon} text-lg`}></i>
+                    <motion.div
+                      className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full flex items-center justify-center"
+                      animate={{ scale: [1, 1.2, 1] }}
+                      transition={{ duration: 1, repeat: Infinity }}
+                    >
+                      <div className="w-1.5 h-1.5 bg-white rounded-full"></div>
+                    </motion.div>
+                  </div>
+                  <span className="text-xs font-medium text-gray-600">{item.label}</span>
+                </motion.div>
+              </motion.button>
+            );
+          }
+
+          return (
+            <Link
+              key={item.id}
+              to={item.id}
+              spy={true}
+              smooth={true}
+              offset={-80}
+              duration={500}
+              className="flex flex-col items-center p-2 cursor-pointer transition-all duration-300"
             >
-              <div className="relative">
-                <i className={`${item.icon} text-xl`}></i>
-                {activeSection === item.id && (
-                  <motion.div
-                    className="absolute -top-1 -right-1 w-2 h-2 bg-rose-600 rounded-full"
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ duration: 0.2 }}
-                  />
-                )}
-              </div>
-              <span className="text-xs font-medium">{item.label}</span>
-            </motion.div>
-          </Link>
-        ))}
+              <motion.div
+                className={`flex flex-col items-center space-y-1 ${
+                  isActive ? item.color : 'text-gray-500'
+                }`}
+                whileTap={{ scale: 0.9 }}
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.2 }}
+              >
+                <div className="relative">
+                  <div className={`p-2 rounded-full transition-all duration-300 ${
+                    isActive 
+                      ? 'bg-gradient-to-r from-rose-100 to-pink-100 shadow-md' 
+                      : 'hover:bg-gray-100'
+                  }`}>
+                    <i className={`${item.icon} text-lg`}></i>
+                  </div>
+                  {isActive && (
+                    <motion.div
+                      className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-rose-500 rounded-full"
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ duration: 0.3 }}
+                    />
+                  )}
+                </div>
+                <span className={`text-xs font-medium transition-colors duration-300 ${
+                  isActive ? 'text-gray-800' : 'text-gray-600'
+                }`}>
+                  {item.label}
+                </span>
+              </motion.div>
+            </Link>
+          );
+        })}
       </div>
     </motion.nav>
   );

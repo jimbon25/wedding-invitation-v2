@@ -5,6 +5,13 @@
 :root {
   --font-inter: 'Inter', sans-serif;
   --font-dancing-script: 'Dancing Script', cursive;
+  --font-great-vibes: 'Great Vibes', cursive;
+  
+  /* Custom colors */
+  --wedding-gold: #d4af37;
+  --wedding-gold-light: #f7e98e;
+  --wedding-rose: #f43f5e;
+  --wedding-pink: #fdf2f8;
 }
 
 /* Custom scrollbar */
@@ -13,16 +20,16 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: #fdf2f8;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #e11d48;
+  background: linear-gradient(135deg, var(--wedding-rose), var(--wedding-gold));
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #be185d;
+  background: linear-gradient(135deg, #e11d48, #d4af37);
 }
 
 /* Smooth scroll behavior */
@@ -30,21 +37,41 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Custom styles */
+/* Font families */
 .font-script {
   font-family: var(--font-dancing-script);
 }
 
+.font-elegant {
+  font-family: var(--font-great-vibes);
+}
+
+/* Gradient text effects */
 .gradient-text {
-  background: linear-gradient(135deg, #e11d48, #be185d, #9d174d);
+  background: linear-gradient(135deg, var(--wedding-rose), var(--wedding-gold));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Animation classes */
+.gradient-text-gold {
+  background: linear-gradient(135deg, var(--wedding-gold), var(--wedding-gold-light));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Modern animations */
 .animate-float {
   animation: float 3s ease-in-out infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-bounce-gentle {
+  animation: bounceGentle 2s ease-in-out infinite;
 }
 
 @keyframes float {
@@ -52,18 +79,82 @@ html {
     transform: translateY(0px);
   }
   50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes bounceGentle {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
     transform: translateY(-10px);
   }
 }
 
-.animate-pulse-slow {
-  animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+/* Hero section styles */
+.hero-overlay {
+  background: linear-gradient(
+    135deg,
+    rgba(0, 0, 0, 0.4) 0%,
+    rgba(212, 175, 55, 0.1) 50%,
+    rgba(244, 63, 94, 0.2) 100%
+  );
 }
 
-/* Bottom navigation shadows */
-.bottom-nav-shadow {
-  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+.hero-text-shadow {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Glass morphism effect */
+.glass-morphism {
+  background: rgba(255, 255, 255, 0.25);
   backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+/* Bottom navigation enhanced */
+.bottom-nav-shadow {
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Button styles */
+.btn-elegant {
+  background: linear-gradient(135deg, var(--wedding-gold), var(--wedding-gold-light));
+  color: white;
+  padding: 12px 32px;
+  border-radius: 50px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-elegant:hover {
+  background: linear-gradient(135deg, #b8941f, var(--wedding-gold));
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+}
+
+.btn-rose {
+  background: linear-gradient(135deg, var(--wedding-rose), #ec4899);
+  color: white;
+  padding: 12px 32px;
+  border-radius: 50px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-rose:hover {
+  background: linear-gradient(135deg, #e11d48, var(--wedding-rose));
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(244, 63, 94, 0.3);
 }
 
 /* Gallery styles */

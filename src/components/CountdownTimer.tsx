@@ -42,23 +42,30 @@ export default function CountdownTimer() {
   ];
 
   return (
-    <div className="flex flex-wrap justify-center gap-4 md:gap-8" data-aos="zoom-in">
+    <div className="flex flex-wrap justify-center gap-4 md:gap-6">
       {timeUnits.map((unit, index) => (
         <motion.div
           key={unit.label}
-          className="bg-white/90 backdrop-blur-sm rounded-lg p-4 md:p-6 shadow-lg text-center min-w-[80px] md:min-w-[100px]"
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: index * 0.1, duration: 0.5 }}
-          whileHover={{ scale: 1.05 }}
+          className="glass-morphism rounded-xl p-4 md:p-6 text-center min-w-[85px] md:min-w-[110px] backdrop-blur-md border border-white/20"
+          initial={{ opacity: 0, y: 50, scale: 0.8 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ delay: index * 0.15, duration: 0.6, ease: "easeOut" }}
+          whileHover={{ scale: 1.05, y: -5 }}
+          whileTap={{ scale: 0.95 }}
         >
-          <div className="text-rose-600 mb-2">
-            <i className={`${unit.icon} text-2xl md:text-3xl`}></i>
+          <div className="text-yellow-300 mb-3">
+            <i className={`${unit.icon} text-2xl md:text-3xl drop-shadow-lg`}></i>
           </div>
-          <div className="text-2xl md:text-4xl font-bold text-gray-800 mb-1">
+          <motion.div 
+            className="text-3xl md:text-5xl font-bold text-white mb-2 hero-text-shadow"
+            key={unit.value} // Re-animate when value changes
+            initial={{ scale: 1.2 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 0.3 }}
+          >
             {unit.value.toString().padStart(2, '0')}
-          </div>
-          <div className="text-sm md:text-base text-gray-600 font-medium">
+          </motion.div>
+          <div className="text-sm md:text-base text-white/80 font-medium uppercase tracking-wider">
             {unit.label}
           </div>
         </motion.div>
