@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 interface LandingPageProps {
@@ -10,6 +10,11 @@ interface LandingPageProps {
 
 export default function LandingPage({ guestName, onOpenInvitation }: LandingPageProps) {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const handlePlayMusic = () => {
     setIsPlaying(true);
@@ -21,27 +26,35 @@ export default function LandingPage({ guestName, onOpenInvitation }: LandingPage
       {/* Background Animation */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-black/20"></div>
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-2 h-2 bg-white/20 rounded-full"
-            initial={{ 
-              x: Math.random() * window.innerWidth, 
-              y: Math.random() * window.innerHeight,
-              scale: 0 
-            }}
-            animate={{
-              y: [0, -100, 0],
-              scale: [0, 1, 0],
-              opacity: [0, 1, 0],
-            }}
-            transition={{
-              duration: 3 + Math.random() * 2,
-              repeat: Infinity,
-              delay: Math.random() * 2,
-            }}
-          />
-        ))}
+        {isClient && [...Array(20)].map((_, i) => {
+          // Use index-based values for consistency
+          const seedX = (i * 123) % 100; // Consistent pseudo-random based on index
+          const seedY = (i * 456) % 100;
+          const seedDuration = (i * 789) % 100;
+          const seedDelay = (i * 321) % 100;
+          
+          return (
+            <motion.div
+              key={i}
+              className="absolute w-2 h-2 bg-white/20 rounded-full"
+              initial={{ 
+                x: (seedX / 100) * (typeof window !== 'undefined' ? window.innerWidth : 1200), 
+                y: (seedY / 100) * (typeof window !== 'undefined' ? window.innerHeight : 800),
+                scale: 0 
+              }}
+              animate={{
+                y: [0, -100, 0],
+                scale: [0, 1, 0],
+                opacity: [0, 1, 0],
+              }}
+              transition={{
+                duration: 3 + (seedDuration / 100) * 2,
+                repeat: Infinity,
+                delay: (seedDelay / 100) * 2,
+              }}
+            />
+          );
+        })}
       </div>
 
       {/* Main Content */}

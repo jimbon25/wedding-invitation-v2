@@ -1,8 +1,14 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
 
 export default function Footer() {
+  const [currentYear, setCurrentYear] = useState(2025); // Default year
+  
+  useEffect(() => {
+    setCurrentYear(new Date().getFullYear());
+  }, []);
   const socialLinks = [
     {
       name: 'Instagram',
@@ -29,8 +35,6 @@ export default function Footer() {
       color: 'hover:text-red-600'
     }
   ];
-
-  const currentYear = new Date().getFullYear();
 
   return (
     <footer className="bg-gradient-to-br from-gray-900 via-rose-900 to-pink-900 text-white">
@@ -167,7 +171,11 @@ export default function Footer() {
 
       {/* Back to Top Button */}
       <motion.button
-        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        onClick={() => {
+          if (typeof window !== 'undefined') {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          }
+        }}
         className="fixed bottom-6 left-6 w-12 h-12 bg-rose-600 hover:bg-rose-700 text-white rounded-full shadow-lg hover:shadow-xl items-center justify-center transition-all duration-300 hidden md:flex"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}

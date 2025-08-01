@@ -53,10 +53,26 @@ export default function GiftInfo() {
   ];
 
   const copyToClipboard = (text: string, accountId: string) => {
-    navigator.clipboard.writeText(text).then(() => {
-      setCopiedAccount(accountId);
-      setTimeout(() => setCopiedAccount(null), 2000);
-    });
+    if (typeof navigator !== 'undefined' && navigator.clipboard) {
+      navigator.clipboard.writeText(text).then(() => {
+        setCopiedAccount(accountId);
+        setTimeout(() => setCopiedAccount(null), 2000);
+      });
+    } else {
+      // Fallback for older browsers or SSR
+      try {
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        setCopiedAccount(accountId);
+        setTimeout(() => setCopiedAccount(null), 2000);
+      } catch (err) {
+        console.log('Copy failed:', err);
+      }
+    }
   };
 
   return (
