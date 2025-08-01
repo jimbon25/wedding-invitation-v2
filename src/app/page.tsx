@@ -14,7 +14,8 @@ import RSVPForm from '@/components/RSVPForm';
 import Guestbook from '@/components/Guestbook';
 import GiftInfo from '@/components/GiftInfo';
 import Footer from '@/components/Footer';
-import BottomNavigation from '@/components/BottomNavigation';
+import WorkingBottomNav from '@/components/WorkingBottomNav';
+import TestBottomNav from '@/components/TestBottomNav';
 import FloatingChat from '@/components/FloatingChat';
 
 function HomeContent() {
@@ -151,8 +152,8 @@ function HomeContent() {
       {/* Footer */}
       <Footer />
 
-      {/* Mobile Bottom Navigation */}
-      <BottomNavigation />
+      {/* Working Bottom Navigation */}
+      <WorkingBottomNav />
 
       {/* Floating AI Chat */}
       <FloatingChat />

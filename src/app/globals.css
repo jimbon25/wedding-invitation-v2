@@ -192,3 +192,23 @@ html {
     padding-bottom: 80px; /* Space for bottom navigation */
   }
 }
+
+/* Bottom Navigation Debug - Force visibility */
+.bottom-navigation-debug {
+  position: fixed !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 9999 !important;
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(20px) !important;
+  border-top: 1px solid rgba(239, 68, 68, 0.2) !important;
+  display: block !important;
+  height: 70px !important;
+}
+
+@media (min-width: 768px) {
+  .bottom-navigation-debug {
+    display: none !important;
+  }
+}

@@ -7,12 +7,15 @@ import { Link } from 'react-scroll';
 export default function BottomNavigation() {
   const [activeSection, setActiveSection] = useState('home');
 
+  console.log('BottomNavigation rendered, activeSection:', activeSection);
+
   const navItems = [
     { id: 'home', label: 'Home', icon: 'bi-house-fill', color: 'text-rose-600' },
     { id: 'gallery', label: 'Gallery', icon: 'bi-images', color: 'text-purple-600' },
     { id: 'rsvp', label: 'RSVP', icon: 'bi-envelope-heart', color: 'text-pink-600' },
     { id: 'guestbook', label: 'Guestbook', icon: 'bi-chat-heart', color: 'text-blue-600' },
     { id: 'chat', label: 'Chat', icon: 'bi-robot', color: 'text-green-600', onClick: () => {
+      console.log('Chat button clicked');
       // Toggle floating chat
       const chatButton = document.querySelector('[data-chat-toggle]') as HTMLElement;
       chatButton?.click();
@@ -44,10 +47,11 @@ export default function BottomNavigation() {
 
   return (
     <motion.nav
-      className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-rose-100 md:hidden z-50 bottom-nav-shadow"
-      initial={{ y: 100, opacity: 0 }}
+      className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-rose-100 z-50 bottom-nav-shadow block md:hidden"
+      initial={{ y: 0, opacity: 1 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5, delay: 1 }}
+      transition={{ duration: 0.3 }}
+      style={{ display: 'block' }} // Force display untuk debugging
     >
       <div className="flex justify-around items-center py-3 px-2">
         {navItems.map((item) => {
